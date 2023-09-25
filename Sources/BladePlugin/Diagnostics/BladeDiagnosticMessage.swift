@@ -23,6 +23,12 @@ extension BladeDiagnosticMessage {
         severity: .error
     )
 
+    static let invalidComponentSubcomponentsSyntax = BladeDiagnosticMessage(
+        message: "The subcomponent list must be an array literal",
+        id: "invalid_component_subcomponents_syntax",
+        severity: .error
+    )
+
     static let invalidComponentType = BladeDiagnosticMessage(
         message: "@Component can only be attached to a protocol",
         id: "invalid_component_type",

@@ -22,5 +22,6 @@
 ///   - modules: The types of modules that can be used to resolve dependencies.
 @attached(peer, names: prefixed(Blade))
 public macro Component(
-    modules: [Any.Type] = []
+    modules: [Any.Type] = [],
+    subcomponents: [Any.Type] = []
 ) = #externalMacro(module: "BladePlugin", type: "ComponentMacro")
