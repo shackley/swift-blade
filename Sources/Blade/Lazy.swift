@@ -1,13 +1,13 @@
 import Foundation
 import os
 
-/// A wrapper class that allows for a dependency to be instantiated lazily.
+/// A wrapper class that allows for a dependency to be initialized lazily.
 ///
-/// When the wrapped type is initialized via invoking the ``get()`` function,
+/// When the wrapped type is initialized upon invoking the ``get()`` function for the first time,
 /// the initialized value will be cached and re-used across subsequent invocations of ``get()``.
 ///
-/// It isn't necessary to explitly provide a `Lazy<T>`. Any provider of type `T` can be used
-/// to satisfy dependencies of type `T` and `Lazy<T>`.
+/// It isn't necessary to declare a provider of type `Lazy<T>`. Any provider of type `T` can be used
+/// to satisfy dependencies of both type `T` and `Lazy<T>`.
 ///
 /// > Note: Lazy is thread-safe.
 ///

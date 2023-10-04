@@ -1,20 +1,8 @@
-/// Declares a group of providers that can be used to satisfy object graph dependencies.
+/// Declares a group of providers that can be used to satisfy dependencies.
 ///
-/// Providers come in 2 forms:
-/// - Initializer based `@Provider`s. These providers can be added to a module by declaring the provided type using the `@Module` `provides` parameter.
-/// - Static `@Provider` functions. These functions are defined directly within a module.
+/// Initializer-based `@Provider`s are included in a module by specifying the provided type via the `@Module` attribute's `provides` parameter.
 ///
-/// ## Example
-///
-/// ```swift
-/// @Module(provides: [Foo.self])
-/// public enum FooModule {
-///     @Provider
-///     static func provideBar() -> Bar {
-///         Bar()
-///     }
-/// }
-/// ```
+/// Static `@Provider`s are embedded directly within a module.
 ///
 /// - Parameters:
 ///   - provides: Declares the types that can be provided from initializer based providers.

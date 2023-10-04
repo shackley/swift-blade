@@ -42,8 +42,6 @@ public struct ProviderMacro: PeerMacro {
             return []
         }
 
-        // TODO: Ignore attribute.returnType for static function based providers
-
         let visibility = VisibilityParser.parse(modifierList: initializerDecl.modifiers)
 
         let initializerBinding = InitializerBindingParser.parse(

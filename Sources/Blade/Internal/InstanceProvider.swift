@@ -1,4 +1,4 @@
-/// A generic provider that provides a specific instance everytime it is requested.
+/// A generic provider that provides a specific instance.
 ///
 /// > Warning: This class is meant for swift-blade internal use.
 public final class InstanceProvider<T>: DependencyProvider {
