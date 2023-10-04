@@ -3,7 +3,7 @@
 /// `@Provider`-attributed initializers and functions generate `DependencyProvider` implementations.
 /// These implementations are used to resolve dependency instances.
 ///
-/// > Warning: This protocol is meant for swift-blade internal use.
+/// > Warning: This protocol is not designed for general use.
 public protocol DependencyProvider<T> {
     associatedtype T
     func get() -> T

@@ -1,0 +1,35 @@
+name: docc
+
+on:
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-13
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Xcode Select
+        run: sudo xcode-select -s /Applications/Xcode_15.0.app
+      - name: Build Docs
+        run: swift package --allow-writing-to-directory .docs generate-documentation --target Blade --disable-indexing --transform-for-static-hosting --hosting-base-path "/swift-blade" --output-path .docs
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: .docs
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+  
