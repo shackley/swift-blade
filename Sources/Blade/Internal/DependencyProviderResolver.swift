@@ -2,10 +2,13 @@
 ///
 /// > Warning: This class is meant for swift-blade internal use.
 public final class DependencyProviderResolver {
+    private let parent: DependencyProviderResolver?
     private var registry: [DependencyKey: () -> any DependencyProvider] = [:]
     private var providers: [DependencyKey: any DependencyProvider] = [:]
 
-    public init() {}
+    public init(parent: DependencyProviderResolver?) {
+        self.parent = parent
+    }
 
     public func register<T>(
         provider: @autoclosure @escaping () -> some DependencyProvider<T>,
@@ -36,11 +39,10 @@ public final class DependencyProviderResolver {
         name: String? = nil
     ) -> any DependencyProvider<T> {
         let key = DependencyKey.from(type: T.self, name: name)
-        if let provider = providers[key] as? any DependencyProvider<T> {
+        if let provider: any DependencyProvider<T> = resolve(key: key) {
             return provider
         }
-        if let provider = registry[key]?() as? any DependencyProvider<T> {
-            providers[key] = provider
+        if let provider: any DependencyProvider<T> = parent?.resolve(key: key) {
             return provider
         }
         if let name {
@@ -48,5 +50,16 @@ public final class DependencyProviderResolver {
         } else {
             fatalError("No provider found for type \(type)")
         }
+    }
+
+    func resolve<T>(key: DependencyKey) -> (any DependencyProvider<T>)? {
+        if let provider = providers[key] as? any DependencyProvider<T> {
+            return provider
+        }
+        if let provider = registry[key]?() as? any DependencyProvider<T> {
+            providers[key] = provider
+            return provider
+        }
+        return nil
     }
 }

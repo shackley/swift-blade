@@ -136,13 +136,60 @@ enum AlphabetModule {
     }
 }
 
-@Component(modules: [FooBarModule.self, AlphabetModule.self])
+// @Component(modules: [FooBarModule.self])
 public protocol RootComponent {
     init(config: Config)
 
     func bar() -> Bar
     func baz() -> Baz
+}
+
+public class BladeRootComponent: RootComponent {
+    private let resolver: DependencyProviderResolver
+    private let barProvider: any DependencyProvider<Bar>
+    private let bazProvider: any DependencyProvider<Baz>
+    public required init(config: Config) {
+        self.resolver = DependencyProviderResolver(parent: nil)
+        resolver.register(provider: InstanceProvider(instance: config))
+        _$BladeFooBarModule.register(resolver: resolver)
+        self.barProvider = resolver.resolve(type: Bar.self)
+        self.bazProvider = resolver.resolve(type: Baz.self)
+    }
+    deinit {
+        _$BladeFooBarModule.deregister(resolver: resolver)
+        _$BladeAlphabetModule.deregister(resolver: resolver)
+    }
+    public func alphabetComponent() -> AlphabetComponent {
+        BladeAlphabetComponent(parent: resolver)
+    }
+    public func bar() -> Bar {
+        barProvider.get()
+    }
+    public func baz() -> Baz {
+        bazProvider.get()
+    }
+}
+
+// @Component(modules: [AlphabetModule.self])
+public protocol AlphabetComponent {
     func alphabet() -> Alphabet
+}
+
+public class BladeAlphabetComponent: AlphabetComponent {
+    private let resolver: DependencyProviderResolver
+    private let alphabetProvider: any DependencyProvider<Alphabet>
+    public required init(parent: DependencyProviderResolver? = nil) {
+        self.resolver = DependencyProviderResolver(parent: parent)
+        _$BladeAlphabetModule.register(resolver: resolver)
+        self.alphabetProvider = resolver.resolve(type: Alphabet.self)
+    }
+    deinit {
+        _$BladeFooBarModule.deregister(resolver: resolver)
+        _$BladeAlphabetModule.deregister(resolver: resolver)
+    }
+    public func alphabet() -> Alphabet {
+        alphabetProvider.get()
+    }
 }
 
 final class BladeTests: XCTestCase {
@@ -153,10 +200,11 @@ final class BladeTests: XCTestCase {
         _ = rootComponent.bar()
         _ = rootComponent.baz()
         _ = rootComponent.baz()
-        _ = rootComponent.alphabet()
         XCTAssertEqual(FooImpl.initializations, 1)
         XCTAssertEqual(BarImpl.initializations, 2)
         XCTAssertEqual(BazImpl.initializations, 1)
+        let alphabetComponent = rootComponent.alphabetComponent()
+        _ = alphabetComponent.alphabet()
         XCTAssertEqual(Alphabet.initializations, 1)
     }
 }
