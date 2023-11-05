@@ -113,7 +113,7 @@ Static `@Provider` functions can have dependencies of their own. Since swift-bla
 
 ```swift
 @Provider
-static func provideHeater(heater: ElectricHeater) -> Pump {
+static func provideHeater(heater: ElectricHeater) -> Heater {
     heater
 }
 
@@ -137,7 +137,7 @@ Static `@Provider`s are embedded directly within a module.
 @Module(provides: [ElectricHeater.self, Thermosiphon.self, CoffeeMaker.self])
 public enum CoffeeModule {
     @Provider
-    static func provideHeater(heater: ElectricHeater) -> Pump {
+    static func provideHeater(heater: ElectricHeater) -> Heater {
         heater
     }
 
