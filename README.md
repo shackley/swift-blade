@@ -184,6 +184,10 @@ struct CoffeeApp {
 }
 ```
 
+## Advanced Usage
+
+See [API Documentation](https://shackley.io/swift-blade/documentation/blade/) for advanced usage.
+
 ## Frequently Asked Questions
 
 **Q: How is the dependency graph validated?**
