@@ -1,4 +1,4 @@
-name: docc
+name: blade
 
 on:
   push:
@@ -10,11 +10,11 @@ permissions:
   pages: write
 
 concurrency:
-  group: "pages"
+  group: ${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  docc:
     runs-on: macos-13
     steps:
       - name: Checkout Repository
@@ -32,4 +32,27 @@ jobs:
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v2
-  
+
+  test-mac:
+    runs-on: macos-13
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Xcode Select
+        run: sudo xcode-select -s /Applications/Xcode_15.0.app
+      - name: Run Tests
+        run: swift test
+
+  test-linux:
+    runs-on: ubuntu-latest
+    container:
+      image: swift:latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Run Tests
+        run: swift test
