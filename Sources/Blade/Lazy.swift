@@ -1,5 +1,4 @@
 import Foundation
-import os
 
 /// A wrapper class that allows for a dependency to be initialized lazily.
 ///
@@ -19,10 +18,10 @@ public final class Lazy<T> {
         case initialized(T)
     }
 
-    private let lock: OSAllocatedUnfairLock<State>
+    private let lock: UnfairLock<State>
 
     public init(_ initializer: @escaping () -> T) {
-        self.lock = OSAllocatedUnfairLock(initialState: .uninitialized(initializer))
+        self.lock = UnfairLock(initialState: .uninitialized(initializer))
     }
 
     public func get() -> T {
