@@ -8,7 +8,7 @@ let package = Package(
     name: "swift-blade",
     platforms: [
         .macOS(.v13),
-        .iOS(.v16),
+        .iOS(.v13),
         .tvOS(.v13),
         .watchOS(.v6),
         .macCatalyst(.v13)
