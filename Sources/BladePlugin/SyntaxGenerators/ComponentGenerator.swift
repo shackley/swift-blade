@@ -66,10 +66,11 @@ private extension InitializerDeclSyntax {
             signature: FunctionSignatureSyntax(
                 parameterClause: FunctionParameterClauseSyntax(
                     parameters: FunctionParameterListSyntax(
-                        componentParameters.map { parameter in
+                        componentParameters.enumerated().map { index, parameter in
                             FunctionParameterSyntax(
                                 name: parameter.name,
-                                type: parameter.type
+                                type: parameter.type,
+                                trailingComma: index < (componentParameters.count - 1)
                             )
                         }
                     )

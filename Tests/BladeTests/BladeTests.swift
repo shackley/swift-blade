@@ -138,7 +138,7 @@ enum AlphabetModule {
 
 @Component(modules: [FooBarModule.self, AlphabetModule.self])
 public protocol RootComponent {
-    init(config: Config)
+    init(config: Config, flag: Bool)
 
     func bar() -> Bar
     func baz() -> Baz
@@ -148,7 +148,7 @@ public protocol RootComponent {
 final class BladeTests: XCTestCase {
     func test() throws {
         let config = Config(n1: 1, n2: 2)
-        let rootComponent = BladeRootComponent(config: config)
+        let rootComponent = BladeRootComponent(config: config, flag: true)
         _ = rootComponent.bar()
         _ = rootComponent.bar()
         _ = rootComponent.baz()
