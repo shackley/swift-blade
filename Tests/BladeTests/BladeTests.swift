@@ -34,7 +34,7 @@ public class BarImpl: Bar {
     public static var initializations: Int = 0
     private let foo: Lazy<Foo>
 
-    @Provider(of: BarImpl.self)
+    @Provider
     public init(foo: Lazy<Foo>) {
         self.foo = foo
         Self.initializations += 1
@@ -45,7 +45,7 @@ public class BazImpl: Baz {
     public static var initializations: Int = 0
     private let foo: Foo
 
-    @Provider(of: BazImpl.self, scope: .singleton)
+    @Provider(scope: .singleton)
     public init(foo: Foo) {
         self.foo = foo
         Self.initializations += 1
@@ -61,7 +61,7 @@ struct B {
 }
 
 struct C {
-    @Provider(of: C.self)
+    @Provider
     init() {}
 }
 
@@ -76,7 +76,7 @@ public class Alphabet {
     private let abc: ABC
     private let key1: String
 
-    @Provider(of: Alphabet.self, scope: .singleton)
+    @Provider(scope: .singleton)
     init(abc: ABC, @Named("key1") key1: String) {
         self.abc = abc
         self.key1 = key1

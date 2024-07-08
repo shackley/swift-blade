@@ -83,12 +83,6 @@ extension BladeDiagnosticMessage {
         severity: .error
     )
 
-    static let missingProviderInitializerReturnType = BladeDiagnosticMessage(
-        message: "An initializer-based @Provider must have its provided type specified via the @Provider attributes `of` parameter",
-        id: "missing_provider_initializer_return_type",
-        severity: .error
-    )
-
     static let missingProviderFunctionReturnType = BladeDiagnosticMessage(
         message: "@Provider functions must return a non-Void type",
         id: "missing_provider_function_binding_return_type",
@@ -107,8 +101,14 @@ extension BladeDiagnosticMessage {
         severity: .error
     )
 
+    static let unknownProviderReturnType = BladeDiagnosticMessage(
+        message: "Unable to determine return type for initializer-based @Provider",
+        id: "unknown_provider_return_type",
+        severity: .error
+    )
+
     static let unnecessaryProviderFunctionReturnType = BladeDiagnosticMessage(
-        message: "Specifying the provided type is only necessary for initializer-based @Providers",
+        message: "Specifying the provided type is no longer necessary. The `of` parameter will be removed in future versions of swift-blade.",
         id: "unnecessary_provider_function_binding_return_type",
         severity: .warning
     )

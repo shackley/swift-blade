@@ -26,10 +26,21 @@ public struct ProviderMacro: PeerMacro {
             context: context
         )
 
-        guard let returnType = attribute.returnType else {
+        if attribute.returnType != nil {
             context.diagnose(
                 node: node,
-                message: .missingProviderInitializerReturnType
+                message: .unnecessaryProviderFunctionReturnType
+            )
+        }
+
+        let providerContext = ProviderContextParser.parse(
+            lexicalContext: context.lexicalContext
+        )
+
+        guard let returnType = providerContext.type else {
+            context.diagnose(
+                node: node,
+                message: .unknownProviderReturnType
             )
             return []
         }

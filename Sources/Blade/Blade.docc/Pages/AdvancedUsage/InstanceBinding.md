@@ -24,7 +24,7 @@ The values passed into the initializer can then be automatically provided as dep
 class CoffeeMaker {
     private let configuration: Configuration
 
-    @Provider(of: CoffeeMaker.self)
+    @Provider
     init(configuration: Configuration) {
         self.configuration = configuration
     }

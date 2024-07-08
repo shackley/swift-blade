@@ -16,13 +16,11 @@ Adding the `@Provider` attribute to an initializer will allow swift-blade to pro
 
 The parameters of the type's initializer are its dependencies. When a new instance of that type is needed, swift-blade will obtain instances of all of its dependencies and invoke its initializer.
 
-> An initializer-based `@Provider` must have its return type specified via the `@Provider` attribute's `of` parameter.
-
 ```swift
 class Thermosiphon: Pump {
     private let heater: Heater
 
-    @Provider(of: Thermosiphon.self)
+    @Provider
     init(heater: Heater) {
         self.heater = heater
     }
@@ -59,4 +57,4 @@ This pattern is commonly used to alias a concrete type to a protocol that it con
 
 ## Topics
 
-- ``Provider(of:scope:named:)``
+- ``Provider(scope:named:)``
