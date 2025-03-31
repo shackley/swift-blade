@@ -13,7 +13,7 @@ class DualBoilerCoffeeMaker {
     private let waterHeater: Heater
     private let milkHeater: Heater
 
-    @Provider(of: DualBoilerCoffeeMaker.self)
+    @Provider
     init(
         @Named("water") waterHeater: Heater,
         @Named("milk") milkHeater: Heater

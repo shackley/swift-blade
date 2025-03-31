@@ -14,7 +14,7 @@ Any dependency of type `T` can be substituted with a `Lazy<T>`. The object won't
 class GrindingCoffeeMaker {
     private let grinder: Lazy<Grinder>
 
-    @Provider(of: GrindingCoffeeMaker.self)
+    @Provider
     init(grinder: Lazy<Grinder>) {
         self.grinder = grinder
     }

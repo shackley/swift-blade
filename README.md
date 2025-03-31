@@ -75,19 +75,16 @@ In order to do so, swift-blade must be told how to obtain instances of each type
 
 Let's go back in and add the `@Provider` attribute to the initializers of our classes so that swift-blade knows how to obtain instances of them.”
 
-> [!NOTE]
-> An initializer-based `@Provider` must have its return type specified via the `@Provider` attribute's `of` parameter.
-
 ```swift
 class ElectricHeater: Heater {
-    @Provider(of: ElectricHeater.self)
+    @Provider
     init() {}
 }
 
 class Thermosiphon: Pump {
     private let heater: Heater
 
-    @Provider(of: Thermosiphon.self)
+    @Provider
     init(heater: Heater) {
         self.heater = heater
     }
@@ -97,7 +94,7 @@ class CoffeeMaker {
     private let heater: Heater
     private let pump: Pump
 
-    @Provider(of: CoffeeMaker.self)
+    @Provider
     init(heater: Heater, pump: Pump) {
         self.heater = heater
         self.pump = pump
@@ -193,7 +190,3 @@ See [API Documentation](https://shackley.io/swift-blade/documentation/blade/) fo
 **Q: How is the dependency graph validated?**
 
 Unlike Dagger, a Blade component's dependency graph is validated at runtime immediately upon component initialization. If a dependency does not have a registered provider, a `fatalError` will occur. This is largely due to the fact that the current [macro](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/macros/) implementation does not have context APIs that allow a macro to glean semantic information about types found in a delcaration at the time of expansion. If such an APIs were to be added, this validation could potentially occurr at compile time.
-
-**Q: Why do `@Provider`s attached to initializers have to specify their provided type?**
-
-Currently, swift macros are not provided with any lexical scope information at the time of expansion, so it isn't possible for a `@Provider` macro to know which type the initializer belongs to otherwise.

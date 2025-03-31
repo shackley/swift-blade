@@ -12,12 +12,12 @@ public struct Config {
 }
 
 public class FooImpl: Foo {
-    public static var initializations: Int = 0
+    nonisolated(unsafe) public static var initializations: Int = 0
     private let config: Config
     private let key1: String
     private let key2: String
 
-    @Provider(of: FooImpl.self)
+    @Provider
     public init(
         config: Config,
         @Named("key1") key1: String,
@@ -31,10 +31,10 @@ public class FooImpl: Foo {
 }
 
 public class BarImpl: Bar {
-    public static var initializations: Int = 0
+    nonisolated(unsafe) public static var initializations: Int = 0
     private let foo: Lazy<Foo>
 
-    @Provider(of: BarImpl.self)
+    @Provider
     public init(foo: Lazy<Foo>) {
         self.foo = foo
         Self.initializations += 1
@@ -42,10 +42,10 @@ public class BarImpl: Bar {
 }
 
 public class BazImpl: Baz {
-    public static var initializations: Int = 0
+    nonisolated(unsafe) public static var initializations: Int = 0
     private let foo: Foo
 
-    @Provider(of: BazImpl.self, scope: .singleton)
+    @Provider(scope: .singleton)
     public init(foo: Foo) {
         self.foo = foo
         Self.initializations += 1
@@ -61,7 +61,7 @@ struct B {
 }
 
 struct C {
-    @Provider(of: C.self)
+    @Provider
     init() {}
 }
 
@@ -72,11 +72,11 @@ struct ABC {
 }
 
 public class Alphabet {
-    public static var initializations: Int = 0
+    nonisolated(unsafe) public static var initializations: Int = 0
     private let abc: ABC
     private let key1: String
 
-    @Provider(of: Alphabet.self, scope: .singleton)
+    @Provider(scope: .singleton)
     init(abc: ABC, @Named("key1") key1: String) {
         self.abc = abc
         self.key1 = key1
