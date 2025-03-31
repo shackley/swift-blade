@@ -26,12 +26,12 @@ jobs:
       - name: Build Docs
         run: swift package --allow-writing-to-directory .docs generate-documentation --target Blade --disable-indexing --transform-for-static-hosting --hosting-base-path "/swift-blade" --output-path .docs
       - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: .docs
       - name: Deploy Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
 
   test-mac:
     runs-on: macos-14
