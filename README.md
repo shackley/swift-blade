@@ -9,7 +9,7 @@ It is heavily inspired by [Dagger](https://dagger.dev/).
 
 ## References
 
-[API Documentation](https://shackley.io/swift-blade/documentation/blade/)
+[API Documentation](https://shackley.dev/swift-blade/documentation/blade/)
 
 ## Installation
 
@@ -183,7 +183,7 @@ struct CoffeeApp {
 
 ## Advanced Usage
 
-See [API Documentation](https://shackley.io/swift-blade/documentation/blade/) for advanced usage.
+See [API Documentation](https://shackley.dev/swift-blade/documentation/blade/) for advanced usage.
 
 ## Frequently Asked Questions
 
